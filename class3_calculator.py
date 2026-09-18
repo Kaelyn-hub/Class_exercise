@@ -9,19 +9,24 @@ def main():
     parser.add_argument("--b", "-b", type=float, required=True, help="Second number")
     parser.add_argument(
         "--operation", "-op",
-        choices=["add"],
+        choices=["add", "subtract"],
         default="add",
         help="Operation to perform"
     )
+
     args = parser.parse_args()
 
     if args.operation == "add":
         result = add(args.a, args.b)
+    elif args.operation == "subtract":
+        result = subtract(args.a, args.b)
 
     print(f"Result: {result}")
 
+def subtract(a, b):
+    return a - b
 
 if __name__ == "__main__":
     main()
 
-    
+
