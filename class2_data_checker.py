@@ -61,19 +61,56 @@ parser.add_argument("--verbose",
 
 # TODO 5: Parse the command-line arguments
 
+#LOGGING, rather than printing(controls what info the program reports and shows timestamps)
+
+import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%H:%M:%S"
+)
+# Create a module-level logger
+logger = logging.getLogger(__name__)
+
 args = parser.parse_args()
+
+#STEP 3:
+if args.verbose:
+    logger.setLevel(logging.DEBUG)
+
+#STEP 4:
+logger.debug(f"Arguments parsed: filename={args.input}")
 
 # Check if the file exists 
 
+#STEP 5:
 p = Path(args.input)
 if not p.is_file():
-    print(f"File not found: '{args.input}'")
+    logger.error(f"File not found: '{args.input}'")
     sys.exit(1)
-
-print(f"File validated: '{args.input}'")
+    
+logger.info(f"File validated: '{args.input}'")
 
 # Check the data
+
+#STEP 6:
+logger.debug(f"Loading data from:'{args.input}'")
+
 header, data, missing_rows = check_data(args.input)
+
+#STEP 7:
+logger.info(f"Loaded {len(data)} rows")
+
+#STEP 8:
+if len(data) == 0:
+    logger.error("Input file contains no data; cannot continue")
+    sys.exit(1)
+
+#STEP 9:
+for row_number in missing_rows:
+        logger.warning(f"Row {row_number} has missing values")
 
 # Save the report
 with open(args.output, "w") as f:
