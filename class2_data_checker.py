@@ -90,7 +90,7 @@ p = Path(args.input)
 if not p.is_file():
     logger.error(f"File not found: '{args.input}'")
     sys.exit(1)
-    
+
 logger.info(f"File validated: '{args.input}'")
 
 # Check the data
