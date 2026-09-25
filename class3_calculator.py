@@ -3,6 +3,8 @@ import argparse
 def add(a, b):
     return a + b
 
+print(10)
+
 def main():
     parser = argparse.ArgumentParser(description="A simple calculator")
     parser.add_argument("--a", "-a", type=float, required=True, help="First number")
@@ -30,3 +32,4 @@ if __name__ == "__main__":
     main()
 
 
+print(500)
